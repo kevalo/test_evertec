@@ -6,6 +6,8 @@
 
     <div class="container py-3">
 
+        <h3 class="w-100 text-center">Resumen de la orden</h3>
+
         <form method="post" action="{{ route('orders.store') }}">
 
             @csrf

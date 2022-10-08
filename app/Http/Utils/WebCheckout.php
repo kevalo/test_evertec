@@ -5,18 +5,13 @@ namespace App\Http\Utils;
 use DateInterval;
 use DateTime;
 
-final class WebCheckout
+class WebCheckout
 {
-
-    public static function prepareSessionRequest($data = [])
+    public function prepareSessionRequest()
     {
-        if (!$data) {
-            return null;
-        }
-
         $currentDate = new DateTime();
         $seed = $currentDate->format('c'); // Returns ISO8601 in proper format
-        $expires = $currentDate->add(new DateInterval('PT60M'))->format('c');
+        $expires = $currentDate->add(new DateInterval('PT' . env('PTP_SESSION_LIMIT') . 'M'))->format('c');
 
         $nonce = (string)time();
 
@@ -26,7 +21,7 @@ final class WebCheckout
             $fields = json_encode([
                 "locale" => "es_CO",
                 "auth" => [
-                    "login" => "6dd490faf9cb87a9862245da41170ff2",
+                    "login" => env('PTP_LOGIN'),
                     "tranKey" => $tranKey,
                     "nonce" => base64_encode($nonce),
                     "seed" => $seed
@@ -41,7 +36,7 @@ final class WebCheckout
                 ],
                 "expiration" => $expires,
                 "returnUrl" => env('APP_URL'),
-                "ipAddress" => "127.0.0.1",
+                "ipAddress" => $_SERVER['REMOTE_ADDR'],
                 "userAgent" => "PlacetoPay Sandbox"
             ], JSON_THROW_ON_ERROR);
 
@@ -52,7 +47,7 @@ final class WebCheckout
         return $fields;
     }
 
-    public static function callApi($endpoint, $fields)
+    public function makeRequest($endpoint, $fields)
     {
         $response = [];
 
