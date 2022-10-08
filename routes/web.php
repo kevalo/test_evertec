@@ -24,6 +24,7 @@ Route::get('/dashboard', static function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('orders', OrderController::class);
+Route::get('/new_payment/{id}', [OrderController::class, 'newPayment'])->name('orders.newPayment');
 
 Route::get('/buy', [FormController::class, 'shopping'])->name('forms.shopping');
 Route::post('/preview', [FormController::class, 'preview'])->name('forms.preview');

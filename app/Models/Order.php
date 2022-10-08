@@ -15,8 +15,24 @@ class Order extends Model
     public const PAYED_STATE = 'PAYED';
     public const REJECTED_STATE = 'REJECTED';
 
+    public const STATES_NAMES = [
+        self::CREATED_STATE => 'Creada',
+        self::PAYED_STATE => 'Pagada',
+        self::REJECTED_STATE => 'Rechazada'
+    ];
+
     public function customer()
     {
-        $this->belongsTo(customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function request()
+    {
+        return $this->hasOne(Request::class, 'order_id');
+    }
+
+    public function getStatusAttribute($originalValue)
+    {
+        return self::STATES_NAMES[$originalValue];
     }
 }
