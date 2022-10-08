@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Utils\WebCheckout;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -35,7 +36,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fields = WebCheckout::prepareSessionRequest($request->all());
+        $sessionResponse = WebCheckout::callApi('/api/session', $fields);
+        //TODO: Verificar respuesta
     }
 
     /**

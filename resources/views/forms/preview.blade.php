@@ -8,6 +8,8 @@
 
         <form method="post" action="{{ route('orders.store') }}">
 
+            @csrf
+
             <div class="mb-3 ">
                 <label for="name" class="form-label">Producto</label>
                 <img src="{{ asset('img/product.webp') }}" class="mb-2" style="width: 100px;" alt="" />
