@@ -28,7 +28,7 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name"required>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
 
             <div class="mb-3">
@@ -38,7 +38,7 @@
 
             <div class="mb-3">
                 <label for="mobile" class="form-label">Número celular</label>
-                <input type="text" class="form-control" id="mobile" name="mobile" required>
+                <input type="number" class="form-control" id="mobile" name="mobile" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Continuar</button>

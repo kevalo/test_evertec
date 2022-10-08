@@ -16,9 +16,9 @@ class FormController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:80',
             'email' => 'required|max:120|email',
-            'mobile' => 'required|max:40|numeric',
+            'mobile' => 'required|max_digits:40|numeric',
         ]);
 
-        return view('forms.preview');
+        return view('forms.preview', ['data' => $validated]);
     }
 }

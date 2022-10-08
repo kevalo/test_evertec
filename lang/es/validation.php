@@ -17,6 +17,7 @@ return [
         'numeric' => 'El :attribute no debe tener más de :max dígitos.',
         'string' => 'El :attribute no debe tener más de :max caracteres.',
     ],
+    'max_digits' => 'El :attribute no debe tener más de :max dígitos.',
     'required' => 'El :attribute es obligatorio.',
     'numeric' => 'El :attribute debe ser un número.',
 
