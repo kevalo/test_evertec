@@ -103,4 +103,19 @@ class OrdersManagement
     {
         return $orderStatus === Order::REJECTED_STATE;
     }
+
+    /**
+     * Returns all the orders
+     * @return array|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllOrders()
+    {
+        $orders = [];
+        try {
+            $orders = Order::with(['customer', 'request'])->get();
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+        }
+        return $orders;
+    }
 }

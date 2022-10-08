@@ -9,6 +9,7 @@ use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Utils\WebCheckout;
@@ -21,11 +22,16 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(OrdersManagement $ordersManagement)
     {
-        //
+        if (!Auth::id()) {
+            return redirect(route('login'));
+        }
+
+        $orders = $ordersManagement->getAllOrders();
+        return view('dashboard', ['orders' => $orders]);
     }
 
     /**

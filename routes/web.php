@@ -19,9 +19,7 @@ Route::get('/', static function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', static function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [OrderController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('orders', OrderController::class);
 Route::get('/new_payment/{id}', [OrderController::class, 'newPayment'])->name('orders.newPayment');
