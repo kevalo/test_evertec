@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', static function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('orders', OrderController::class);
+
+Route::get('/buy', [FormController::class, 'shopping'])->name('forms.shopping');
+Route::post('/preview', [FormController::class, 'preview'])->name('forms.preview');
 
 require __DIR__ . '/auth.php';
