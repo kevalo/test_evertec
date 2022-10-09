@@ -53,7 +53,7 @@ class WebCheckout
                 ],
                 "expiration" => $expires,
                 "returnUrl" => route('orders.show', $orderId),
-                "ipAddress" => $_SERVER['REMOTE_ADDR'],
+                "ipAddress" => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
                 "userAgent" => "PlacetoPay Sandbox"
             ], JSON_THROW_ON_ERROR);
 
