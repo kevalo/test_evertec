@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCustomer;
 use App\Http\Utils\CustomersManagement;
 use App\Http\Utils\OrdersManagement;
 use App\Http\Utils\RequestsManagement;
@@ -11,7 +12,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Utils\WebCheckout;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -44,27 +44,15 @@ class OrderController extends Controller
      * @return Application|RedirectResponse|Redirector|void
      */
     public function store(
-        Request             $request,
+        StoreCustomer       $request,
         CustomersManagement $customersManagement,
         OrdersManagement    $ordersManagement,
         RequestsManagement  $requestsManagement,
         WebCheckout         $webCheckout
     )
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:80',
-            'email' => 'required|max:120|email',
-            'mobile' => 'required|max_digits:40|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect(route('forms.shopping'))
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         try {
-            $customer = $customersManagement->saveCustomer($validator->validated());
+            $customer = $customersManagement->saveCustomer($request->validated());
 
             if (!$customer) {
                 $this->redirectWithError('forms.shopping', Config::get('constants.order_creation_error'));

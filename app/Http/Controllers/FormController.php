@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCustomer;
 
 class FormController extends Controller
 {
@@ -11,14 +11,8 @@ class FormController extends Controller
         return view('forms.shopping');
     }
 
-    public function preview(Request $request)
+    public function preview(StoreCustomer $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:80',
-            'email' => 'required|max:120|email',
-            'mobile' => 'required|max_digits:40|numeric',
-        ]);
-
-        return view('forms.preview', ['data' => $validated]);
+        return view('forms.preview', ['data' => $request->validated()]);
     }
 }
